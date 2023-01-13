@@ -1,4 +1,4 @@
-use crate::proc;
+use crate::processor;
 
 pub enum AluOp {
     OpAdd,
@@ -19,7 +19,7 @@ pub enum AluOp {
 }
 
 
-pub fn run_alu(val_a: u16, val_b: u16, current_flags: proc::ProcFlags, operation: AluOp) -> (u16, proc::ProcFlags) {
+pub fn run_alu(val_a: u16, val_b: u16, current_flags: processor::ProcFlags, operation: AluOp) -> (u16, processor::ProcFlags) {
     let res: u16;
     let carry: bool;
     let overflow: bool;
@@ -86,7 +86,7 @@ pub fn run_alu(val_a: u16, val_b: u16, current_flags: proc::ProcFlags, operation
             // evil conditional that basically evaluates:
             // if b > 0 && res > 0 && res <= 0 OR a < 0 && b < 0 && res >= 0 
         },
-        AluOp::OpNop => return (0, proc::ProcFlags{
+        AluOp::OpNop => return (0, processor::ProcFlags{
             negative: current_flags.negative,
             zero: current_flags.zero,
             carry: current_flags.carry,
@@ -95,7 +95,7 @@ pub fn run_alu(val_a: u16, val_b: u16, current_flags: proc::ProcFlags, operation
         _ => todo!(),
     }
 
-    (res, proc::ProcFlags {
+    (res, processor::ProcFlags {
         negative: (res >> 15) == 1,
         zero: res == 0,
         carry: carry,
