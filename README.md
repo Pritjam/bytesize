@@ -3,13 +3,14 @@
 ## General Info
 This is a 16-bit CPU architecture. There are 8 general-purpose registers, all 16 bits wide, and a 16-bit instruction pointer. The CPU can address 128k of ram as 64Kx16. There is also support for IO operations. The instruction set is detailed more in the ISA section, but in general, the ISA is designed to be a simplified version of ARM64, with much less features and a little x86 inspiration. 
 
-Any GPR can be used in an ALU operation or data movement operation. The first 4, designated %ax, %bx, %cx, and %dx, are intended for general-purpose data usage. The other 4, %si, %di, %bp, and %sp, are intended for more specific use something along the lines of x86’s registers: Source Index, Destination Index, Base Pointer, and Stack Pointer. The Stack Pointer of this CPU is %sp, and the CALL and RET instructions use that as the stack pointer to push/pop the return address. The PUSH and POP instructions also use %sp as the stack pointer, but since those assemble into pre- and post-indexed LOAD and STORE operations respectively, any GPR could be used as a “stack pointer” at any time. 
+Any GPR can be used in an ALU operation or data movement operation. The first four, designated %ax, %bx, %cx, and %dx, are intended for general-purpose data usage. The other four, %si, %di, %bp, and %sp, are intended for more specific use something along the lines of x86’s registers: Source Index, Destination Index, Base Pointer, and Stack Pointer. The Stack Pointer of this CPU is %sp, and the CALL and RET instructions use that as the stack pointer to push/pop the return address. The PUSH and POP instructions also use %sp as the stack pointer, but since those assemble into pre- and post-indexed LOAD and STORE operations respectively, any GPR could be used as a “stack pointer” at any time. 
 
 An instruction cycle is made of 5 machine cycles, and each machine cycle performs a different subtask of one instruction. This follows the 5-stage Fetch, Decode, Execute, Memory, Writeback paradigm. The CPU supports a dual register writeback, which is required in the case of an instruction that reads from memory and modifies a pointer, such as POP or a pre/post-indexed LOAD.
 
-This CPU will be implemented in software as a Rust project, very similar to SE-Lab (System Emulator lab, found in UTCS’s Computer Architecture class). This project should be a good introduction to Rust as well as good practice with converting existing C projects into Rust.
+This CPU will be implemented in software as a C project, very similar to SE-Lab (System Emulator lab, found in UTCS’s Computer Architecture class). It will eventually be ported to Rust. This project should be a good introduction to Rust as well as good practice with converting existing C projects into Rust.
 
 As for physical implementation, this CPU will eventually be implemented using a Xilinx Artix-7 FPGA on the BASYS 3 trainer board. This FPGA should have more than enough capacity for this CPU, as well as enough on-board RAM (225KB) to support it. Eventually, we should be able to build up an entire computer on the Basys, as it incorporates a VGA port, USB HID port (presented internally as a PS/2 port), and even peripheral slots (for a possible disk/IO interface).
+
 
 ## TODO
 - List of valid instructions (not opcodes, instructions)
